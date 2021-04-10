@@ -11,22 +11,28 @@ export class BinarySearchTree<T> {
     private addKey(newNode: BinaryTreeNode<T> | undefined, key: T): boolean {
         if (newNode === undefined) {
             this.root = new BinaryTreeNode<T>(key);
-        } else {
-            if (key === newNode.key) {
-                return false;
-            }
-            if (key < newNode.key) {
-                if (newNode.leftNode !== undefined) {
-                    this.addKey(newNode.leftNode, key);
-                } else {
-                    newNode.leftNode = new BinaryTreeNode(key);
+            return true;
+        }
+        if (key === newNode.key) {
+            return false;
+        }
+        if (key < newNode.key) {
+            if (newNode.leftNode !== undefined) {
+                if (!this.addKey(newNode.leftNode, key)) {
+                    return false;
                 }
             } else {
-                if (newNode.rightNode !== undefined) {
-                    this.addKey(newNode.rightNode, key);
-                } else {
-                    newNode.rightNode = new BinaryTreeNode(key);
+                newNode.leftNode = new BinaryTreeNode(key);
+                return true;
+            }
+        } else {
+            if (newNode.rightNode !== undefined) {
+                if (!this.addKey(newNode.rightNode, key)) {
+                    return false;
                 }
+            } else {
+                newNode.rightNode = new BinaryTreeNode(key);
+                return true;
             }
         }
         return true;
@@ -63,7 +69,7 @@ export class BinarySearchTree<T> {
     }
 
     // Удаление по значению
-    private deleteKey (curNode: BinaryTreeNode<T> | undefined, key: T): BinaryTreeNode<T> | undefined {
+    private deleteKey(curNode: BinaryTreeNode<T> | undefined, key: T): BinaryTreeNode<T> | undefined {
         if (curNode === undefined) {
             return undefined;
         }
@@ -98,7 +104,7 @@ export class BinarySearchTree<T> {
          return curNode;
     }
 
-    public delete (key: T): void {
+    public delete(key: T): void {
         this.root = this.deleteKey(this.root, key);
     }
 

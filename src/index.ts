@@ -22,7 +22,7 @@ function main(): void {
          switch (userChoice) {
              case "1":
                  const insert = readlineSync.question("Key to insert = ");
-                 const bol: boolean = bst.add(+insert);
+                 const bol = bst.add(+insert);
                  if (!bol) {
                     console.log("Такой ключ уже есть, вставка невозможна!");
                  }
